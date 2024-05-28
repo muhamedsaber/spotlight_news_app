@@ -4,3 +4,6 @@ import 'package:spotlight/spotlight_news.dart';
 void main() {
   runApp(const SpotlightNews());
 }
+class TestGit{
+  
+}
