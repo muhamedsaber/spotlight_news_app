@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:spotlight/config/theme/theme_colors/theme_colors.dart';
 
-ThemeData darkThemeManager = ThemeData(
+ThemeData lightThemeManager = ThemeData(
   primaryColor: DarkThemeColors.primaryColor,
+  appBarTheme:const AppBarTheme(
+    backgroundColor: DarkThemeColors.scaffoldBackground
+  ),
   scaffoldBackgroundColor: DarkThemeColors.scaffoldBackground,
   colorScheme: const ColorScheme(
     brightness: Brightness.dark,

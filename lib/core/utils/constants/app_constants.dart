@@ -59,6 +59,12 @@ class AppConstants {
     CountryModel(name: "es", flag: AppAssets.es),
   ];
   static const String country = "country";
+  static const insanibcfontName="Insanibc";
+  static const String spotlight="Spotlight";
+  static const String settings= "Settings";
+  static const String saved="Saved";
+  static const String notFoundImage="https://www.pointvisible.com/wp-content/uploads/2018/11/404-picture-not-found.jpg";
+  static const fadeInImage="assets/flags/Animation - 1713103511458.gif";
 }
 
 class CountryModel {
