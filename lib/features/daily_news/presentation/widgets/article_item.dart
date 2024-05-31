@@ -5,10 +5,11 @@ import 'package:spotlight/core/utils/constants/app_constants.dart';
 import 'package:spotlight/features/daily_news/data/models/article_model.dart';
 import 'package:spotlight/features/daily_news/presentation/widgets/article_full_view.dart';
 
-class ArticleItem extends StatelessWidget {
-  const ArticleItem({super.key, required this.article});
-  final ArticleData article;
 
+class ArticleItem extends StatelessWidget {
+  const ArticleItem({super.key, required this.article,required this.isArticlesForHomeView});
+  final ArticleData article;
+  final bool isArticlesForHomeView;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -17,7 +18,7 @@ class ArticleItem extends StatelessWidget {
           context: context,
           isScrollControlled: true,
           builder: (context) {
-            return ArticleFullView(article: article);
+            return ArticleFullView(article: article,isArticlesForHomeView: isArticlesForHomeView,);
           },
         );
       },
@@ -71,7 +72,7 @@ class ArticleItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Spacer(),
+                 const Spacer(),
                   buildDateTimeInfo(context),
                 ],
               ),
@@ -80,9 +81,9 @@ class ArticleItem extends StatelessWidget {
         ),
       ),
     );
+    
   }
-
-  Widget buildDateTimeInfo(BuildContext context) {
+ Widget buildDateTimeInfo(BuildContext context) {
     return Container(
       height: 30.h,
       decoration: BoxDecoration(
@@ -94,19 +95,16 @@ class ArticleItem extends StatelessWidget {
         children: [
           const Icon(Icons.date_range),
           SizedBox(width: 5.w),
-          Text(DateTime.parse(article.publishedAt ?? "")
-              .toString()
-              .substring(0, 10)),
+          Text(DateTime.parse(article.publishedAt ?? "").toString().substring(0, 10)),
           SizedBox(width: 5.w),
           const Icon(Icons.access_time),
           SizedBox(width: 5.w),
-          Text(DateTime.parse(article.publishedAt ?? "")
-              .toString()
-              .substring(11, 16)),
+          Text(DateTime.parse(article.publishedAt ?? "").toString().substring(11, 16)),
         ],
       ),
     );
   }
+ 
 
   String handleImage() {
     if (article.urlToImage == null || article.urlToImage!.isEmpty) {

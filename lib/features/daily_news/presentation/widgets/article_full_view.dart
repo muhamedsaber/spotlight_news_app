@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
+import 'package:spotlight/config/database/article_saver.dart';
 import 'package:spotlight/config/database/articles_database_impl.dart';
 import 'package:spotlight/core/utils/constants/app_constants.dart';
 import 'package:spotlight/features/daily_news/data/models/article_model.dart';
 
 class ArticleFullView extends StatefulWidget {
-  const ArticleFullView({super.key, required this.article});
+  const ArticleFullView(
+      {super.key, required this.article, required this.isArticlesForHomeView});
   final ArticleData article;
-
+  final bool isArticlesForHomeView;
   @override
   State<ArticleFullView> createState() => _ArticleFullViewState();
 }
 
 class _ArticleFullViewState extends State<ArticleFullView> {
-  late Box box;
-  openArticleBox() async {
-    box = await Hive.openBox<ArticleData>(articleBox);
-  }
-
   @override
   void initState() {
-    openArticleBox();
     super.initState();
   }
 
@@ -127,53 +123,31 @@ class _ArticleFullViewState extends State<ArticleFullView> {
           right: 25.w,
           child: buildDateTimeInfo(context),
         ),
-        Positioned(
-          top: 10.h,
-          left: 20.w,
-          child: IconButton(
-            onPressed: () {
-              saveArticle(widget.article);
-            },
-            icon: Icon(
-              Icons.bookmark,
-              color: Theme.of(context).colorScheme.primary,
-              size: 30.h,
-            ),
-            style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(
-                  Theme.of(context).colorScheme.surface,
+        widget.isArticlesForHomeView
+            ? Positioned(
+                top: 10.h,
+                left: 20.w,
+                child: IconButton(
+                  onPressed: () {
+                    ArticleSaver().saveArticle(context, widget.article);
+                  },
+                  icon: Icon(
+                    Icons.bookmark,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 30.h,
+                  ),
+                  style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(
+                        Theme.of(context).colorScheme.surface,
+                      ),
+                      shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.r),
+                      ))),
                 ),
-                shape: WidgetStateProperty.all(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.r),
-                ))),
-          ),
-        )
+              )
+            : const SizedBox.shrink()
       ],
     );
-  }
-
-  saveArticle(ArticleData article) async{
-    if (!box.containsKey(article.url)) {
-     await box.put(article.url, article);
-     if(mounted){
-        ScaffoldMessenger.of(context).showSnackBar(
-        const  SnackBar(
-            content: Text("Article saved"),
-            duration:  Duration(seconds: 2),
-          ),
-        );
-     }
-    } else {
-      
-      if(mounted){
-        ScaffoldMessenger.of(context).showSnackBar(
-         const SnackBar(
-            content: Text("Article already saved"),
-            duration:  Duration(seconds: 2),
-          ),
-        );
-      }
-    }
   }
 
   Widget buildArticleContent(BuildContext context) {

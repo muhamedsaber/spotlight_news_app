@@ -30,6 +30,7 @@ class DynamicArticlesContent extends StatelessWidget {
                   ArticleData article = articles.articles[index];
                   return ArticleItem(
                     article: article,
+                    isArticlesForHomeView: true,
                   );
                 },
               ),

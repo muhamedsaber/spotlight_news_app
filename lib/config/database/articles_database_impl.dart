@@ -10,7 +10,7 @@ class ArticleDatabaseImpl implements ArticlesDatabase {
 
   @override
   Future<void> deleteArticle(ArticleData article) async {
-    await Hive.box<ArticleData>(articleBox).delete(article);
+    await Hive.box<ArticleData>(articleBox).delete(article.url);
   }
 
   @override
