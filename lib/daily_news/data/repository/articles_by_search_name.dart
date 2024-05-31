@@ -4,14 +4,15 @@ import 'package:spotlight/core/networking/api_result.dart';
 import 'package:spotlight/core/networking/api_service.dart';
 import 'package:spotlight/daily_news/data/models/article_model.dart';
 
-class ArticlesByCategoryRepository {
-  final ApiService service;
-  ArticlesByCategoryRepository(this.service);
- Future<ApiResult<Articles>>  getArticlesByCategory(
-      {required String country, required String category}) async {
+class ArticlesBySearchNameRepository {
+  final ApiService apiService;
+
+  ArticlesBySearchNameRepository(this.apiService);
+
+  Future<ApiResult<Articles>> getArticlesBySearchName(String searchName) async {
     try {
-      Articles articles = await service.getTopHeadlinesForCategory(
-          country: "us", category: category, apiKey: ApiConstants.apiKey);
+      Articles articles = await apiService.getTrendingNews(
+          apiKey: ApiConstants.apiKey, q: searchName);
       return ApiResult.success(articles);
     } catch (e) {
       return ApiResult.failure(ErrorHandler.handle(e));

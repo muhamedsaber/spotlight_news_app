@@ -23,4 +23,11 @@ abstract class ApiService {
     @Query("category") String? category,
     @Query("apiKey") String? apiKey,
   });
+
+  // Get Trending News
+  @GET("/everything")
+  Future<Articles> getTrendingNews({
+    @Query("apiKey") String? apiKey,
+    @Query("q") String? q,
+  });
 }

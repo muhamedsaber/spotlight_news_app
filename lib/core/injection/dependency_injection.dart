@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotlight/core/networking/api_service.dart';
 import 'package:spotlight/core/networking/dio_factory.dart';
 import 'package:spotlight/daily_news/data/repository/articles_by_category_repository.dart';
+import 'package:spotlight/daily_news/data/repository/articles_by_search_name.dart';
 import 'package:spotlight/daily_news/data/repository/articles_repository.dart';
 import 'package:spotlight/daily_news/presentation/logic/articles/cubit/articles_cubit.dart';
 
@@ -18,6 +19,7 @@ setup() async {
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
   getIt.registerSingleton<SharedPreferences>(sharedPrefs);
   getIt.registerSingleton<ArticlesByCategoryRepository>(ArticlesByCategoryRepository(getIt()));
-  getIt.registerSingleton<ArticlesCubit>(ArticlesCubit(getIt(),getIt()));
+  getIt.registerSingleton<ArticlesBySearchNameRepository>(ArticlesBySearchNameRepository(getIt()));
+  getIt.registerSingleton<ArticlesCubit>(ArticlesCubit(getIt(),getIt(),getIt()));
 
 }
