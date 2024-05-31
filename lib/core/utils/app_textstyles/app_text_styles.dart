@@ -5,8 +5,9 @@ import 'package:spotlight/core/utils/constants/app_constants.dart';
 
 class AppTextStyles {
   static TextStyle insanibc40bold = TextStyle(
-      fontSize: 30.sp,
-      fontWeight: FontWeightHelper.bold,
-      fontFamily: AppConstants.insanibcfontName,
-      letterSpacing: 3.sp);
+    fontSize: 30.sp,
+    fontWeight: FontWeightHelper.bold,
+    fontFamily: AppConstants.insanibcfontName,
+    letterSpacing: 3.sp,
+  );
 }
