@@ -22,7 +22,7 @@ class AppAssets{
     static const String hu="assets/flags/hu.png";
     static const String id="assets/flags/id.png";
     static const String ie="assets/flags/ie.png";
-    static const String il="assets/flags/il.png";
+   
     static const String inFlag="assets/flags/in.png";
     static const String it="assets/flags/it.png";
     static const String jp="assets/flags/jp.png";

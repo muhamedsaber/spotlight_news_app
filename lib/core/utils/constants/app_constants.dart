@@ -1,7 +1,7 @@
 import 'package:spotlight/core/utils/app_assets.dart';
 
 class AppConstants {
-  List<CountryModel> countries = [
+  static List<CountryModel> countries = [
     CountryModel(name: "ae", flag: AppAssets.ae),
     CountryModel(name: "ar", flag: AppAssets.ar),
     CountryModel(name: "at", flag: AppAssets.at),
@@ -24,7 +24,7 @@ class AppConstants {
     CountryModel(name: "hu", flag: AppAssets.hu),
     CountryModel(name: "id", flag: AppAssets.id),
     CountryModel(name: "ie", flag: AppAssets.ie),
-    CountryModel(name: "il", flag: AppAssets.il),
+   
     CountryModel(name: "in", flag: AppAssets.inFlag),
     CountryModel(name: "it", flag: AppAssets.it),
     CountryModel(name: "jp", flag: AppAssets.jp),
@@ -66,6 +66,8 @@ class AppConstants {
   static const String notFoundImage="https://www.pointvisible.com/wp-content/uploads/2018/11/404-picture-not-found.jpg";
   static const fadeInImage="assets/flags/Animation - 1713103511458.gif";
   static const String errorImage="assets/flags/error.jpg";
+  static const String isDarkMode="isDarkMode";
+  static const String themBox= "ThemeBox";
 }
 
 class CountryModel {

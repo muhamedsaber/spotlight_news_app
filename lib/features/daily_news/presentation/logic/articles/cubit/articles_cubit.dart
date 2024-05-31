@@ -1,11 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotlight/core/injection/dependency_injection.dart';
 import 'package:spotlight/core/networking/api_error_handler.dart';
 import 'package:spotlight/core/networking/api_result.dart';
-import 'package:spotlight/core/utils/constants/app_constants.dart';
 import 'package:spotlight/core/utils/country_util.dart';
 import 'package:spotlight/features/daily_news/data/models/article_model.dart';
 import 'package:spotlight/features/daily_news/data/repository/articles_by_category_repository.dart';

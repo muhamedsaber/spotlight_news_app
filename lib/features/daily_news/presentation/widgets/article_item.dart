@@ -56,6 +56,7 @@ class ArticleItem extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeightHelper.regular,
                       fontSize: 13.sp,
+                      color: context.theme.colorScheme.onSecondary,
                     ),
                   ),
                 ),

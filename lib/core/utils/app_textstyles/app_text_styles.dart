@@ -7,5 +7,6 @@ class AppTextStyles {
   static TextStyle insanibc40bold = TextStyle(
       fontSize: 30.sp,
       fontWeight: FontWeightHelper.bold,
-      fontFamily: AppConstants.insanibcfontName);
+      fontFamily: AppConstants.insanibcfontName,
+      letterSpacing: 3.sp);
 }
