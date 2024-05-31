@@ -32,6 +32,13 @@ class ArticleItem extends StatelessWidget {
                   placeholder: AppConstants.fadeInImage,
                   image: handleAljazeeraImage(),
                   fit: BoxFit.cover,
+                  imageErrorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      AppConstants.errorImage,
+                      fit: BoxFit.cover,
+                    );
+                  
+                  },
                 )),
           ),
           SizedBox(
@@ -96,14 +103,14 @@ class ArticleItem extends StatelessWidget {
 
   String handleAljazeeraImage() {
     String notAvailableImage =
-        "https://th.bing.com/th/id/R.dff8349980f1d590649d801f7db1f2b7?rik=hLQjPAknWZSZ9g&pid=ImgRaw&r=0";
+        AppConstants.errorImage;
     if (article.urlToImage == null || article.urlToImage == "") {
-      return AppConstants.notFoundImage;
+      return AppConstants.errorImage;
     } else if (article.urlToImage != null || article.urlToImage != "") {
       if (article.urlToImage!.contains("www.aljazeera.com")) {
         return notAvailableImage;
       }
     }
-    return article.urlToImage ?? AppConstants.notFoundImage;
+    return article.urlToImage ?? AppConstants.errorImage;
   }
 }

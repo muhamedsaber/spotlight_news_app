@@ -65,6 +65,7 @@ class AppConstants {
   static const String saved="Saved";
   static const String notFoundImage="https://www.pointvisible.com/wp-content/uploads/2018/11/404-picture-not-found.jpg";
   static const fadeInImage="assets/flags/Animation - 1713103511458.gif";
+  static const String errorImage="assets/flags/error.jpg";
 }
 
 class CountryModel {

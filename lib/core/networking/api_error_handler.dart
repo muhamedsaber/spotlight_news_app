@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:spotlight/core/networking/api_error_model.dart';
 
 enum DataSource {
@@ -138,6 +139,8 @@ class ErrorHandler implements Exception {
 ApiErrorModel _handleDioError(DioException error) {
   if (error is SocketException) {
     return DataSource.socketError.getFailure();
+  }else if(error is NetworkImageLoadException){
+    return DataSource.notFound.getFailure();
   }
   switch (error.type) {
     case DioExceptionType.connectionTimeout:
