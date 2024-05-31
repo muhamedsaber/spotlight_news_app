@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive/hive.dart';
 import 'package:spotlight/config/database/article_saver.dart';
-import 'package:spotlight/config/database/articles_database_impl.dart';
 import 'package:spotlight/core/utils/constants/app_constants.dart';
 import 'package:spotlight/features/daily_news/data/models/article_model.dart';
 
