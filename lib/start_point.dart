@@ -5,6 +5,7 @@ import 'package:spotlight/features/articles_source/presentation/Logic/cubit/sour
 import 'package:spotlight/features/articles_source/presentation/views/news_source_view.dart';
 import 'package:spotlight/features/daily_news/presentation/logic/articles/cubit/articles_cubit.dart';
 import 'package:spotlight/features/daily_news/presentation/views/home_view.dart';
+import 'package:spotlight/features/settings/presentation/views/settings_view.dart';
 
 class StartPoint extends StatefulWidget {
   const StartPoint({super.key});
@@ -30,6 +31,7 @@ class _StartPointState extends State<StartPoint> {
                 child: Text("No Routes Found on this Name!"),
               ),
             ),
+            SettingsView()
           ]),
       bottomNavigationBar: CustomBottomNavBar(
         onTabChange: (index) {
@@ -41,6 +43,8 @@ class _StartPointState extends State<StartPoint> {
             controller.jumpToPage(1);
           } else if (index == 2) {
             controller.jumpToPage(2);
+          }else if(index==3){
+            controller.jumpToPage(3);
           }
         },
       ),
