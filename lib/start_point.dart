@@ -22,6 +22,7 @@ class _StartPointState extends State<StartPoint> {
     return Scaffold(
       body: PageView(
           controller: controller,
+          physics:const NeverScrollableScrollPhysics(),
           scrollDirection: Axis.horizontal,
           children: const [
             HomeView(),
