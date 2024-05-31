@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:spotlight/config/database/article_adapter.dart';
 import 'package:spotlight/core/injection/dependency_injection.dart';
 import 'package:spotlight/core/utils/constants/app_constants.dart';
 import 'package:spotlight/spotlight_news.dart';
@@ -10,5 +11,7 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox(AppConstants.themBox);
   await setup();
+  Hive.registerAdapter(ArticleAdapter()); 
+  
   runApp(const SpotlightNews());
 }

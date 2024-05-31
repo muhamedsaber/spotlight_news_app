@@ -1,19 +1,34 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive/hive.dart';
+import 'package:spotlight/config/database/articles_database_impl.dart';
 import 'package:spotlight/core/utils/constants/app_constants.dart';
 import 'package:spotlight/features/daily_news/data/models/article_model.dart';
 
-class ArticleFullView extends StatelessWidget {
+class ArticleFullView extends StatefulWidget {
   const ArticleFullView({super.key, required this.article});
   final ArticleData article;
+
+  @override
+  State<ArticleFullView> createState() => _ArticleFullViewState();
+}
+
+class _ArticleFullViewState extends State<ArticleFullView> {
+  late Box box;
+  openArticleBox() async {
+    box = await Hive.openBox<ArticleData>(articleBox);
+  }
+
+  @override
+  void initState() {
+    openArticleBox();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 550.h,
-      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.only(
@@ -33,6 +48,7 @@ class ArticleFullView extends StatelessWidget {
       ),
     );
   }
+
   Widget buildDateTimeInfo(BuildContext context) {
     return Container(
       height: 30.h,
@@ -45,15 +61,20 @@ class ArticleFullView extends StatelessWidget {
         children: [
           const Icon(Icons.date_range),
           SizedBox(width: 5.w),
-          Text(DateTime.parse(article.publishedAt ?? "").toString().substring(0, 10)),
+          Text(DateTime.parse(widget.article.publishedAt ?? "")
+              .toString()
+              .substring(0, 10)),
           SizedBox(width: 5.w),
           const Icon(Icons.access_time),
           SizedBox(width: 5.w),
-          Text(DateTime.parse(article.publishedAt ?? "").toString().substring(11, 16)),
+          Text(DateTime.parse(widget.article.publishedAt ?? "")
+              .toString()
+              .substring(11, 16)),
         ],
       ),
     );
   }
+
   Widget buildDragIndicator(BuildContext context) {
     return Container(
       height: 5.h,
@@ -83,7 +104,7 @@ class ArticleFullView extends StatelessWidget {
             ),
           ),
           child: Hero(
-            tag: article.urlToImage ?? " ",
+            tag: widget.article.urlToImage ?? " ",
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12.r),
               clipBehavior: Clip.hardEdge,
@@ -106,8 +127,53 @@ class ArticleFullView extends StatelessWidget {
           right: 25.w,
           child: buildDateTimeInfo(context),
         ),
+        Positioned(
+          top: 10.h,
+          left: 20.w,
+          child: IconButton(
+            onPressed: () {
+              saveArticle(widget.article);
+            },
+            icon: Icon(
+              Icons.bookmark,
+              color: Theme.of(context).colorScheme.primary,
+              size: 30.h,
+            ),
+            style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all(
+                  Theme.of(context).colorScheme.surface,
+                ),
+                shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                ))),
+          ),
+        )
       ],
     );
+  }
+
+  saveArticle(ArticleData article) async{
+    if (!box.containsKey(article.url)) {
+     await box.put(article.url, article);
+     if(mounted){
+        ScaffoldMessenger.of(context).showSnackBar(
+        const  SnackBar(
+            content: Text("Article saved"),
+            duration:  Duration(seconds: 2),
+          ),
+        );
+     }
+    } else {
+      
+      if(mounted){
+        ScaffoldMessenger.of(context).showSnackBar(
+         const SnackBar(
+            content: Text("Article already saved"),
+            duration:  Duration(seconds: 2),
+          ),
+        );
+      }
+    }
   }
 
   Widget buildArticleContent(BuildContext context) {
@@ -115,20 +181,25 @@ class ArticleFullView extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.symmetric(horizontal: 10.w),
         children: [
-          buildArticleText(context, article.title, FontWeight.bold, 16.sp),
+          buildArticleText(
+              context, widget.article.title, FontWeight.bold, 16.sp),
           buildSpacer(10.h),
-          buildArticleText(context, article.description, FontWeight.w400, 14.sp),
+          buildArticleText(
+              context, widget.article.description, FontWeight.w400, 14.sp),
           buildSpacer(10.h),
-          buildArticleText(context, article.content, FontWeight.w400, 14.sp),
+          buildArticleText(
+              context, widget.article.content, FontWeight.w400, 14.sp),
           buildSpacer(20.h),
           buildAuthorInfo(context),
+          buildSpacer(10.h),
           buildSpacer(50.h),
         ],
       ),
     );
   }
 
-  Widget buildArticleText(BuildContext context, String? text, FontWeight fontWeight, double fontSize) {
+  Widget buildArticleText(BuildContext context, String? text,
+      FontWeight fontWeight, double fontSize) {
     return Text(
       text ?? " ",
       style: TextStyle(
@@ -153,7 +224,7 @@ class ArticleFullView extends StatelessWidget {
         SizedBox(width: 20.w),
         Expanded(
           child: Text(
-            article.author ?? " ",
+            widget.article.author ?? " ",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 14.sp,
@@ -166,11 +237,12 @@ class ArticleFullView extends StatelessWidget {
   }
 
   String handleImage() {
-    if (article.urlToImage == null || article.urlToImage!.isEmpty) {
+    if (widget.article.urlToImage == null ||
+        widget.article.urlToImage!.isEmpty) {
       return AppConstants.errorImage;
-    } else if (article.urlToImage!.contains("www.aljazeera.com")) {
+    } else if (widget.article.urlToImage!.contains("www.aljazeera.com")) {
       return AppConstants.errorImage;
     }
-    return article.urlToImage!;
+    return widget.article.urlToImage!;
   }
 }

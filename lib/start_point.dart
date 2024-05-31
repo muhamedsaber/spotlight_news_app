@@ -5,6 +5,7 @@ import 'package:spotlight/features/articles_source/presentation/Logic/cubit/sour
 import 'package:spotlight/features/articles_source/presentation/views/news_source_view.dart';
 import 'package:spotlight/features/daily_news/presentation/logic/articles/cubit/articles_cubit.dart';
 import 'package:spotlight/features/daily_news/presentation/views/home_view.dart';
+import 'package:spotlight/features/save_articles/presentation/views/saved_article_view.dart';
 import 'package:spotlight/features/settings/presentation/views/settings_view.dart';
 
 class StartPoint extends StatefulWidget {
@@ -26,11 +27,7 @@ class _StartPointState extends State<StartPoint> {
             HomeView(),
            
            NewsSourceView(),
-            Scaffold(
-              body: Center(
-                child: Text("No Routes Found on this Name!"),
-              ),
-            ),
+            SavedArticleView(),
             SettingsView()
           ]),
       bottomNavigationBar: CustomBottomNavBar(
