@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:spotlight/core/networking/api_error_model.dart';
 
@@ -14,6 +16,7 @@ enum DataSource {
   sendTimeout,
   cacheError,
   noInternetConnection,
+  socketError,
   defaultError
 }
 
@@ -25,6 +28,7 @@ class ErrorCodes {
   static const int forbidden = 403;
   static const int notFound = 404;
   static const int internalServerError = 500;
+  static const int peerSocketException = 104;
   static const int apiLogicError = 422;
   static const int connectTimeout = -1;
   static const int cancel = -2;
@@ -41,6 +45,8 @@ class ErrorMessages {
   static const String unauthorized = ApiErrorsMessages.unauthorizedError;
   static const String forbidden = ApiErrorsMessages.forbiddenError;
   static const String notFound = ApiErrorsMessages.notFoundError;
+  static const String peerSocketException =
+      ApiErrorsMessages.peerSocketException;
   static const String internalServerError =
       ApiErrorsMessages.internalServerError;
   static const String connectTimeout = ApiErrorsMessages.timeoutError;
@@ -65,7 +71,7 @@ class ApiErrorsMessages {
       "An internal server error occurred.";
   static const String unknownError = "An unknown error occurred.";
   static const String timeoutError = "The request timed out. Please try again.";
-
+  static const String peerSocketException = " Peer socket exception";
   static const String cacheError = "There was an error accessing the cache.";
   static const String noInternetError =
       "No internet connection. Please check your connection.";
@@ -130,6 +136,9 @@ class ErrorHandler implements Exception {
 }
 
 ApiErrorModel _handleDioError(DioException error) {
+  if (error is SocketException) {
+    return DataSource.socketError.getFailure();
+  }
   switch (error.type) {
     case DioExceptionType.connectionTimeout:
       return DataSource.connectTimeout.getFailure();
@@ -137,6 +146,7 @@ ApiErrorModel _handleDioError(DioException error) {
       return DataSource.sendTimeout.getFailure();
     case DioExceptionType.receiveTimeout:
       return DataSource.receiveTimeout.getFailure();
+
     case DioExceptionType.badResponse:
     case DioExceptionType.unknown:
       if (error.response != null && error.response?.statusCode != null) {

@@ -30,7 +30,7 @@ class ArticleItem extends StatelessWidget {
                 clipBehavior: Clip.hardEdge,
                 child: FadeInImage.assetNetwork(
                   placeholder: AppConstants.fadeInImage,
-                  image: article.urlToImage ?? AppConstants.notFoundImage,
+                  image: handleAljazeeraImage(),
                   fit: BoxFit.cover,
                 )),
           ),
@@ -92,5 +92,18 @@ class ArticleItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String handleAljazeeraImage() {
+    String notAvailableImage =
+        "https://th.bing.com/th/id/R.dff8349980f1d590649d801f7db1f2b7?rik=hLQjPAknWZSZ9g&pid=ImgRaw&r=0";
+    if (article.urlToImage == null || article.urlToImage == "") {
+      return AppConstants.notFoundImage;
+    } else if (article.urlToImage != null || article.urlToImage != "") {
+      if (article.urlToImage!.contains("www.aljazeera.com")) {
+        return notAvailableImage;
+      }
+    }
+    return article.urlToImage ?? AppConstants.notFoundImage;
   }
 }

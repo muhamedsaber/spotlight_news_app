@@ -1,0 +1,19 @@
+Bug Report and Solution
+Issue:
+When fetching articles from the API,
+some images fail to load due to network errors,
+ specifically the "Connection reset by peer" error.
+  This results in a broken user experience where some articles do not display their associated images.
+
+Root Cause:
+The error occurs when the connection to the server is unexpectedly
+reset during the image fetch request. This is often due to network instability or restrictions.
+
+Solution:
+put The aljazeera image handler if the image containe the host name of [www.aljazeera.com]
+it will Automatically replace the original image with a custom image says ["not available "]
+
+
+----Hand on The Reason behinde the bug:
+This Bug is happens because some sites like aljazeera is banned from
+Egypt.
