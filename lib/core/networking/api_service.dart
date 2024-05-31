@@ -15,4 +15,12 @@ abstract class ApiService {
     @Query("country") String? country,
     @Query("apiKey") String? apiKey,
   });
+
+  // get Tp Headlines For Specific Category
+  @GET("/top-headlines")
+  Future<Articles> getTopHeadlinesForCategory({
+    @Query("country") String? country,
+    @Query("category") String? category,
+    @Query("apiKey") String? apiKey,
+  });
 }

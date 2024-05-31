@@ -1,19 +1,22 @@
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotlight/core/injection/dependency_injection.dart';
 import 'package:spotlight/core/networking/api_error_handler.dart';
 import 'package:spotlight/core/networking/api_result.dart';
 import 'package:spotlight/core/utils/constants/app_constants.dart';
 import 'package:spotlight/daily_news/data/models/article_model.dart';
+import 'package:spotlight/daily_news/data/repository/articles_by_category_repository.dart';
 import 'package:spotlight/daily_news/data/repository/articles_repository.dart';
 import 'package:spotlight/daily_news/presentation/logic/articles/cubit/articles_state.dart';
 
 class ArticlesCubit extends Cubit<ArticlesState> {
-  ArticlesCubit(this.articleRepository) : super(const ArticlesState.initial());
+  ArticlesCubit(this.articleRepository, this.articlesByCategoryRepository)
+      : super(const ArticlesState.initial());
   ArticleRepository articleRepository;
+  ArticlesByCategoryRepository articlesByCategoryRepository;
+
   Future<String> _getCountryNameFromDataBase() async {
     String name =
         getIt<SharedPreferences>().getString(AppConstants.country) ?? "us";
@@ -29,9 +32,22 @@ class ArticlesCubit extends Cubit<ArticlesState> {
       log("success");
       emit(ArticlesState.success(articles));
     }, failure: (ErrorHandler errorHandler) {
-      
       emit(ArticlesState.error(
-        
+          errorHandler.apiErrorModel.message ?? "Error Occurred"));
+    });
+  }
+
+  getArticlesByCategory({required String categoryName}) async {
+    emit(const ArticlesState.loading());
+    String countryName = await _getCountryNameFromDataBase();
+
+    ApiResult<Articles> result = await articlesByCategoryRepository
+        .getArticlesByCategory(country: countryName, category: categoryName);
+    result.when(success: (Articles articles) {
+      log("success for $categoryName");
+      emit(ArticlesState.success(articles));
+    }, failure: (ErrorHandler errorHandler) {
+      emit(ArticlesState.error(
           errorHandler.apiErrorModel.message ?? "Error Occurred"));
     });
   }

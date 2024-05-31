@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spotlight/core/extensions/theme_extension.dart';
+import 'package:spotlight/core/injection/dependency_injection.dart';
+import 'package:spotlight/daily_news/presentation/logic/articles/cubit/articles_cubit.dart';
 
 List<String> categories = [
-  "General",
-  "Business",
-  "Entertainment",
-  "Health",
-  "Science",
-  "Sports",
-  "Technology"
+  "Top Articles",
+  "general",
+  "business",
+  "entertainment",
+  "health",
+  "science",
+  "sports",
+  "technology"
 ];
 
 class CustomCategoryListView extends StatefulWidget {
@@ -36,12 +39,18 @@ class _CustomCategoryListView extends State<CustomCategoryListView> {
                 setState(() {
                   currentIndex = index;
                 });
+                if (index == 0) {
+                  getIt<ArticlesCubit>().getArticles();
+                } else {
+                  getIt<ArticlesCubit>()
+                      .getArticlesByCategory(categoryName: categories[index]);
+                }
               },
               splashColor: Colors.transparent,
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.easeInCubic,
-                width: 100,
+                width: 120.w,
                 decoration: BoxDecoration(
                   color: currentIndex == index
                       ? context.theme.colorScheme.primary
@@ -55,6 +64,7 @@ class _CustomCategoryListView extends State<CustomCategoryListView> {
                       color: currentIndex == index
                           ? context.theme.colorScheme.onSurface
                           : context.theme.colorScheme.primary,
+                      fontSize: currentIndex == index ? 16.sp : 14.sp,
                     ),
                   ),
                 ),
