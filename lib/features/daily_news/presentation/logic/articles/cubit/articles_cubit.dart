@@ -6,11 +6,12 @@ import 'package:spotlight/core/injection/dependency_injection.dart';
 import 'package:spotlight/core/networking/api_error_handler.dart';
 import 'package:spotlight/core/networking/api_result.dart';
 import 'package:spotlight/core/utils/constants/app_constants.dart';
-import 'package:spotlight/daily_news/data/models/article_model.dart';
-import 'package:spotlight/daily_news/data/repository/articles_by_category_repository.dart';
-import 'package:spotlight/daily_news/data/repository/articles_by_search_name.dart';
-import 'package:spotlight/daily_news/data/repository/articles_repository.dart';
-import 'package:spotlight/daily_news/presentation/logic/articles/cubit/articles_state.dart';
+import 'package:spotlight/core/utils/country_util.dart';
+import 'package:spotlight/features/daily_news/data/models/article_model.dart';
+import 'package:spotlight/features/daily_news/data/repository/articles_by_category_repository.dart';
+import 'package:spotlight/features/daily_news/data/repository/articles_by_search_name.dart';
+import 'package:spotlight/features/daily_news/data/repository/articles_repository.dart';
+import 'package:spotlight/features/daily_news/presentation/logic/articles/cubit/articles_state.dart';
 
 class ArticlesCubit extends Cubit<ArticlesState> {
   ArticlesCubit(this.articleRepository, this.articlesByCategoryRepository,
@@ -19,9 +20,11 @@ class ArticlesCubit extends Cubit<ArticlesState> {
   ArticleRepository articleRepository;
   ArticlesByCategoryRepository articlesByCategoryRepository;
   ArticlesBySearchNameRepository articlesBySearchNameRepository;
+
+  // get the country name from the cache where the user saved it if the user
+  //did not save it then the default country name is us
   Future<String> _getCountryNameFromDataBase() async {
-    String name =
-        getIt<SharedPreferences>().getString(AppConstants.country) ?? "us";
+    String name = await getIt<CountryUtil>().getCountryNameFromDataBase();
     return name;
   }
 

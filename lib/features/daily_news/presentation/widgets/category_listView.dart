@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spotlight/core/extensions/theme_extension.dart';
-import 'package:spotlight/core/injection/dependency_injection.dart';
-import 'package:spotlight/daily_news/presentation/logic/articles/cubit/articles_cubit.dart';
 
 List<String> categories = [
   "Top Articles",
@@ -16,8 +14,8 @@ List<String> categories = [
 ];
 
 class CustomCategoryListView extends StatefulWidget {
-  const CustomCategoryListView({super.key});
-
+  const CustomCategoryListView({super.key, required this.onCategorySelected});
+  final Function(int) onCategorySelected;
   @override
   State<CustomCategoryListView> createState() => _CustomCategoryListView();
 }
@@ -39,12 +37,7 @@ class _CustomCategoryListView extends State<CustomCategoryListView> {
                 setState(() {
                   currentIndex = index;
                 });
-                if (index == 0) {
-                  getIt<ArticlesCubit>().getArticles();
-                } else {
-                  getIt<ArticlesCubit>()
-                      .getArticlesByCategory(categoryName: categories[index]);
-                }
+                widget.onCategorySelected(index);
               },
               splashColor: Colors.transparent,
               child: AnimatedContainer(

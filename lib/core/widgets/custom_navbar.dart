@@ -28,7 +28,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       child: GNav(
         rippleColor: context.theme.primaryColor,
         hoverColor: context.theme.primaryColor,
-        gap: 24,
+        gap: 0.w,
         backgroundColor: context.theme.colorScheme.surface,
         tabBorder: null,
         haptic: true,
@@ -37,24 +37,28 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
         duration: const Duration(milliseconds: 400),
         tabBackgroundColor: context.theme.primaryColor,
         color: AppColors.darkNavy,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12),
         tabMargin:
-            EdgeInsets.only(top: 5.h, bottom: 5.h, left: 10.w, right: 10.w),
-        tabs: const [
+            EdgeInsets.only(top: 5.h, bottom: 5.h, left: 5.w, right: 5.w),
+        tabs: [
           GButton(
             icon: Icons.home,
             text: 'Home',
-            iconSize: 30,
+            iconSize: 20.w,
+          ),
+          GButton(
+            icon: Icons.source,
+            text: 'Source',
+            iconSize: 20.w,
           ),
           GButton(
             icon: Icons.bookmark,
-            text: 'Likes',
-            iconSize: 30,
+            text: 'Saved',
+            iconSize: 20.w,
           ),
           GButton(
             icon: Icons.settings,
-            text: 'Search',
-            iconSize: 30,
+            text: 'Settings',
           ),
         ],
         selectedIndex: _selectedIndex,

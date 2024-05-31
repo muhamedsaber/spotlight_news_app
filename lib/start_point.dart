@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotlight/core/widgets/custom_navbar.dart';
-import 'package:spotlight/daily_news/presentation/logic/articles/cubit/articles_cubit.dart';
-import 'package:spotlight/daily_news/presentation/views/home_view.dart';
+import 'package:spotlight/features/articles_source/presentation/Logic/cubit/source_cubit.dart';
+import 'package:spotlight/features/articles_source/presentation/views/news_source_view.dart';
+import 'package:spotlight/features/daily_news/presentation/logic/articles/cubit/articles_cubit.dart';
+import 'package:spotlight/features/daily_news/presentation/views/home_view.dart';
 
 class StartPoint extends StatefulWidget {
   const StartPoint({super.key});
@@ -21,11 +23,8 @@ class _StartPointState extends State<StartPoint> {
           scrollDirection: Axis.horizontal,
           children: const [
             HomeView(),
-            Scaffold(
-              body: Center(
-                child: Text("No Routes Found on this Name!"),
-              ),
-            ),
+           
+           NewsSourceView(),
             Scaffold(
               body: Center(
                 child: Text("No Routes Found on this Name!"),
@@ -38,6 +37,7 @@ class _StartPointState extends State<StartPoint> {
             context.read<ArticlesCubit>().getArticles();
             controller.jumpToPage(0);
           } else if (index == 1) {
+            context.read<SourceCubit>().getSources();
             controller.jumpToPage(1);
           } else if (index == 2) {
             controller.jumpToPage(2);

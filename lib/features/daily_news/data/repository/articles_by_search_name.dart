@@ -2,7 +2,7 @@ import 'package:spotlight/core/networking/api_constants.dart';
 import 'package:spotlight/core/networking/api_error_handler.dart';
 import 'package:spotlight/core/networking/api_result.dart';
 import 'package:spotlight/core/networking/api_service.dart';
-import 'package:spotlight/daily_news/data/models/article_model.dart';
+import 'package:spotlight/features/daily_news/data/models/article_model.dart';
 
 class ArticlesBySearchNameRepository {
   final ApiService apiService;

@@ -3,9 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spotlight/core/extensions/theme_extension.dart';
 import 'package:spotlight/core/injection/dependency_injection.dart';
-import 'package:spotlight/daily_news/data/repository/articles_by_search_name.dart';
-import 'package:spotlight/daily_news/presentation/logic/articles/cubit/articles_cubit.dart';
-import 'package:spotlight/daily_news/presentation/logic/trendings_animator/cubit/trending_animator_cubit.dart';
+import 'package:spotlight/features/daily_news/presentation/logic/articles/cubit/articles_cubit.dart';
+import 'package:spotlight/features/daily_news/presentation/logic/trendings_animator/cubit/trending_animator_cubit.dart';
 
 class TrendingGridView extends StatelessWidget {
   const TrendingGridView({super.key});

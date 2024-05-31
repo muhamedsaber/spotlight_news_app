@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 
 import 'package:retrofit/retrofit.dart';
+import 'package:spotlight/features/articles_source/data/models/source_model.dart';
 import 'package:spotlight/core/networking/api_constants.dart';
-import 'package:spotlight/daily_news/data/models/article_model.dart';
+import 'package:spotlight/features/daily_news/data/models/article_model.dart';
 
 part 'api_service.g.dart';
 
@@ -29,5 +30,12 @@ abstract class ApiService {
   Future<Articles> getTrendingNews({
     @Query("apiKey") String? apiKey,
     @Query("q") String? q,
+  });
+
+  @GET("/top-headlines/sources")
+  Future<Sources> getSources({
+    @Query("apiKey") String? apiKey,
+    @Query("country") String? country,
+    @Query("category") String? category,
   });
 }

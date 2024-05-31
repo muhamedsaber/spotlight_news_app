@@ -4,7 +4,7 @@ import 'package:spotlight/core/extensions/media_query.dart';
 import 'package:spotlight/core/extensions/theme_extension.dart';
 import 'package:spotlight/core/utils/app_textstyles/font_weight_helper.dart';
 import 'package:spotlight/core/utils/constants/app_constants.dart';
-import 'package:spotlight/daily_news/data/models/article_model.dart';
+import 'package:spotlight/features/daily_news/data/models/article_model.dart';
 
 class ArticleItem extends StatelessWidget {
   const ArticleItem({super.key, required this.article});

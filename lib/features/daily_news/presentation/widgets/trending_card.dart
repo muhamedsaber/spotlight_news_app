@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spotlight/daily_news/presentation/logic/trendings_animator/cubit/trending_animator_cubit.dart';
-import 'package:spotlight/daily_news/presentation/widgets/trendings_gridview.dart';
+import 'package:spotlight/features/daily_news/presentation/logic/trendings_animator/cubit/trending_animator_cubit.dart';
+import 'package:spotlight/features/daily_news/presentation/widgets/trendings_gridview.dart';
 
 class TrendingCard extends StatelessWidget {
   const TrendingCard({super.key});
