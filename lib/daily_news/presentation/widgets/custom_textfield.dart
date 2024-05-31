@@ -12,13 +12,10 @@ import 'package:spotlight/daily_news/presentation/logic/trendings_animator/cubit
 
 class CustomTextfield extends StatefulWidget {
   final String hintText;
-  final TextEditingController controller;
+  final Function(String)? onSubmitted;
 
-  const CustomTextfield({
-    super.key,
-    required this.hintText,
-    required this.controller,
-  });
+  const CustomTextfield(
+      {super.key, required this.hintText, required this.onSubmitted});
 
   @override
   State<CustomTextfield> createState() => _CustomTextfieldState();
@@ -47,9 +44,8 @@ class _CustomTextfieldState extends State<CustomTextfield> {
             ),
           ),
           child: TextFieldContent(
-            controller: widget.controller,
+            onSubmitted: widget.onSubmitted,
             hintText: widget.hintText,
-            isTrendingStarts: true,
             onPressed: () {
               context.read<TrendingAnimatorCubit>().toggleAnimation();
             },
@@ -65,9 +61,8 @@ class _CustomTextfieldState extends State<CustomTextfield> {
             borderRadius: BorderRadius.circular(12.r),
           ),
           child: TextFieldContent(
-            controller: widget.controller,
             hintText: widget.hintText,
-            isTrendingStarts: true,
+            onSubmitted: widget.onSubmitted,
             onPressed: () {
               context.read<TrendingAnimatorCubit>().toggleAnimation();
             },
@@ -81,22 +76,20 @@ class _CustomTextfieldState extends State<CustomTextfield> {
 class TextFieldContent extends StatelessWidget {
   const TextFieldContent({
     super.key,
-    required this.controller,
     required this.hintText,
-    required this.isTrendingStarts,
+    required this.onSubmitted,
     required this.onPressed,
   });
 
-  final TextEditingController controller;
   final String hintText;
-  final bool isTrendingStarts;
+  final Function(String)? onSubmitted;
   final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: controller,
       textAlign: TextAlign.start,
+      onSubmitted: onSubmitted,
       style: TextStyle(
         color: context.theme.colorScheme.onSurface,
         fontSize: 18.sp,
